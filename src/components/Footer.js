@@ -4,8 +4,6 @@ import { motion } from 'framer-motion';
 import LokanexLogo from './Logo';
 import { 
   FiMail, 
-  FiPhone, 
-  FiMapPin, 
   FiGithub, 
   FiTwitter, 
   FiLinkedin, 
