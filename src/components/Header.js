@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
+
 import LokanexLogo from './Logo';
 import { FiMenu, FiX } from 'react-icons/fi';
 
-const HeaderContainer = styled(motion.header)`
+const HeaderContainer = styled.header`
   position: fixed;
   top: 0;
   left: 0;
@@ -59,7 +59,7 @@ const Nav = styled.nav`
   }
 `;
 
-const NavLink = styled(motion.a)`
+const NavLink = styled.a`
   color: ${props => props.theme.colors.textSecondary};
   text-decoration: none;
   font-weight: ${props => props.theme.fontWeights.medium};
@@ -109,7 +109,7 @@ const NavLink = styled(motion.a)`
   }
 `;
 
-const CTAButton = styled(motion.button)`
+const CTAButton = styled.button`
   background: ${props => props.theme.colors.gradientPrimary};
   color: ${props => props.theme.colors.background};
   border: none;
@@ -152,7 +152,7 @@ const CTAButton = styled(motion.button)`
   }
 `;
 
-const MobileMenuButton = styled(motion.button)`
+const MobileMenuButton = styled.button`
   display: none;
   background: rgba(0, 212, 255, 0.1);
   border: 1px solid rgba(0, 212, 255, 0.2);
@@ -174,7 +174,7 @@ const MobileMenuButton = styled(motion.button)`
   }
 `;
 
-const MobileMenu = styled(motion.div)`
+const MobileMenu = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -202,7 +202,7 @@ const MobileMenu = styled(motion.div)`
   }
 `;
 
-const MobileNavLink = styled(motion.a)`
+const MobileNavLink = styled.a`
   color: ${props => props.theme.colors.textPrimary};
   text-decoration: none;
   font-weight: ${props => props.theme.fontWeights.medium};
@@ -220,7 +220,7 @@ const MobileNavLink = styled(motion.a)`
   }
 `;
 
-const MobileCTAButton = styled(motion.button)`
+const MobileCTAButton = styled.button`
   background: ${props => props.theme.colors.gradientPrimary};
   color: ${props => props.theme.colors.background};
   border: none;
@@ -233,7 +233,7 @@ const MobileCTAButton = styled(motion.button)`
   box-shadow: ${props => props.theme.shadows.glow};
 `;
 
-const CloseButton = styled(motion.button)`
+const CloseButton = styled.button`
   position: absolute;
   top: ${props => props.theme.spacing.lg};
   right: ${props => props.theme.spacing.lg};
@@ -285,12 +285,7 @@ const Header = () => {
 
   return (
     <>
-      <HeaderContainer
-        scrolled={scrolled}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
+      <HeaderContainer scrolled={scrolled}>
         <HeaderContent>
           <LokanexLogo size="medium" />
           
@@ -303,8 +298,6 @@ const Header = () => {
                   e.preventDefault();
                   scrollToSection(item.href);
                 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
               >
                 {item.label}
               </NavLink>
@@ -313,34 +306,22 @@ const Header = () => {
           
           <CTAButton
             onClick={() => scrollToSection('#contact')}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             Get Started
           </CTAButton>
           
           <MobileMenuButton 
             onClick={() => setMobileMenuOpen(true)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             <FiMenu />
           </MobileMenuButton>
         </HeaderContent>
       </HeaderContainer>
 
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <MobileMenu
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
+      {mobileMenuOpen && (
+        <MobileMenu>
             <CloseButton 
               onClick={() => setMobileMenuOpen(false)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               <FiX />
             </CloseButton>
@@ -353,9 +334,6 @@ const Header = () => {
                   e.preventDefault();
                   scrollToSection(item.href);
                 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
               >
                 {item.label}
               </MobileNavLink>
@@ -363,17 +341,11 @@ const Header = () => {
             
             <MobileCTAButton
               onClick={() => scrollToSection('#contact')}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: navItems.length * 0.1 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               Get Started
             </MobileCTAButton>
-          </MobileMenu>
-        )}
-      </AnimatePresence>
+        </MobileMenu>
+      )}
     </>
   );
 };
